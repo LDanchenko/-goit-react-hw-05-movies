@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
 import { useQuery } from 'react-query';
+import { Link } from 'react-router-dom';
 import { getTrending } from '../services/movie-api';
+import styles from './HomePage.module.css';
 
 export const HomePage = () => {
   const { isLoading, error, data } = useQuery('getTrending', () =>
@@ -11,10 +12,14 @@ export const HomePage = () => {
   if (!isLoading)
     return (
       <>
-        <h1>Trending today</h1>
+        <h1 className={styles.title}>Trending today</h1>
         <ul>
           {data.map(item => (
-            <li key={item.id}>{item.title ? item.title : item.name}</li>
+            <li key={item.id}>
+              <Link to={'/movies/' + item.id}>
+                {item.title ? item.title : item.name}
+              </Link>
+            </li>
           ))}
         </ul>
       </>

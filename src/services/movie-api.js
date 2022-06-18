@@ -14,4 +14,24 @@ const getTrending = async () => {
   return data;
 };
 
-export { getTrending };
+const getMovieDetails = async id => {
+  const { data } = await axios.get(`/movie/${id}`, {
+    params: {
+      api_key: API_KEY,
+      language: 'en-US',
+    },
+  });
+  return data;
+};
+
+const getMovieCredits = async id => {
+  const { data } = await axios.get(`/movie/${id}/credits`, {
+    params: {
+      api_key: API_KEY,
+      language: 'en-US',
+    },
+  });
+  return data.cast;
+};
+
+export { getTrending, getMovieDetails, getMovieCredits };
