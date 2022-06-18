@@ -25,3 +25,8 @@
 .listItem:not(:last-child) {
   margin-right: 30px;
 }
+
+.active {
+  composes: link;
+  color: #ff5c5c;
+}
