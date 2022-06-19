@@ -4,13 +4,11 @@ import { getMovieCredits } from '../../services/movie-api';
 
 const Cast = () => {
   let { id } = useParams();
-  console.log(id);
 
   const { isLoading, error, data } = useQuery('getMovieCredits', () =>
     getMovieCredits(id)
   );
 
-  console.log(data);
   if (error) return <h2>An error has occurred {error.message} </h2>;
   if (!isLoading) {
     return (
