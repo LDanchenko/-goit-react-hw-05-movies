@@ -34,4 +34,15 @@ const getMovieCredits = async id => {
   return data.cast;
 };
 
-export { getTrending, getMovieDetails, getMovieCredits };
+const getMovieReviews = async id => {
+  const { data } = await axios.get(`/movie/${id}/reviews`, {
+    params: {
+      api_key: API_KEY,
+      language: 'en-US',
+      page: 1,
+    },
+  });
+  return data.results;
+};
+
+export { getTrending, getMovieDetails, getMovieCredits, getMovieReviews };

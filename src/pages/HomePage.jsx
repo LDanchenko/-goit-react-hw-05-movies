@@ -7,7 +7,6 @@ export const HomePage = () => {
   const { isLoading, error, data } = useQuery('getTrending', () =>
     getTrending()
   );
-  console.log(data);
   if (error) return <h2>An error has occurred {error.message} </h2>;
   if (!isLoading)
     return (

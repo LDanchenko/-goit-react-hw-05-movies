@@ -1,20 +1,10 @@
 import { useQuery } from 'react-query';
-import {
-  useParams,
-  useLocation,
-  Link,
-  Outlet,
-  matchPath,
-} from 'react-router-dom';
+import { useParams, Link, Outlet } from 'react-router-dom';
 import { getMovieDetails } from '../../services/movie-api';
 import styles from './MovieDetailsPage.module.css';
 
 const MovieDetailsPage = () => {
   let { id } = useParams();
-  const { pathname } = useLocation();
-  const linkEnabled = matchPath({ path: '/movies/:id/cast' }, pathname)
-    ? true
-    : false;
 
   const { isLoading, error, data } = useQuery('getMovieDetails', () =>
     getMovieDetails(id)
@@ -58,12 +48,16 @@ const MovieDetailsPage = () => {
 
         <div className={styles.container}>
           <h4>Additional information</h4>
-          {linkEnabled && (
-            <Link className={styles.disabledLink} to={`${pathname}`}>
-              Cast
-            </Link>
-          )}
-          {!linkEnabled && <Link to={`${pathname}/cast`}>Cast</Link>}
+          <ul>
+            <li>
+              {' '}
+              <Link to={`/movies/${id}/cast`}>Cast</Link>{' '}
+            </li>
+            <li>
+              {' '}
+              <Link to={`/movies/${id}/reviews`}>Reviews</Link>{' '}
+            </li>
+          </ul>
         </div>
         <Outlet />
       </>
