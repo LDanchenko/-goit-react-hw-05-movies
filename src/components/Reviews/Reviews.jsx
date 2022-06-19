@@ -10,7 +10,7 @@ const Reviews = () => {
   );
   if (error) return <h2>An error has occurred {error.message} </h2>;
   if (!isLoading) {
-    if (data) {
+    if (data.length > 0) {
       return (
         <ul>
           {data.map(item => (
@@ -27,4 +27,4 @@ const Reviews = () => {
   }
 };
 
-export { Reviews };
+export default Reviews;

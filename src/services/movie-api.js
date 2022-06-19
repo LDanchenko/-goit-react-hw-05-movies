@@ -44,5 +44,23 @@ const getMovieReviews = async id => {
   });
   return data.results;
 };
+const getMovie = async query => {
+  const { data } = await axios.get(`/search/movie`, {
+    params: {
+      api_key: API_KEY,
+      language: 'en-US',
+      page: 1,
+      include_adult: false,
+      query,
+    },
+  });
+  return data.results;
+};
 
-export { getTrending, getMovieDetails, getMovieCredits, getMovieReviews };
+export {
+  getTrending,
+  getMovieDetails,
+  getMovieCredits,
+  getMovieReviews,
+  getMovie,
+};

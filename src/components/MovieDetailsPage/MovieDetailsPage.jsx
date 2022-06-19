@@ -1,14 +1,26 @@
 import { useQuery } from 'react-query';
-import { useParams, Link, Outlet } from 'react-router-dom';
+import {
+  useParams,
+  Link,
+  Outlet,
+  useLocation,
+  useNavigate,
+} from 'react-router-dom';
 import { getMovieDetails } from '../../services/movie-api';
 import styles from './MovieDetailsPage.module.css';
 
 const MovieDetailsPage = () => {
   let { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const { isLoading, error, data } = useQuery('getMovieDetails', () =>
     getMovieDetails(id)
   );
+
+  const handleGoBack = () => {
+    navigate(location?.state?.from || '/');
+  };
 
   if (error) return <h2>An error has occurred {error.message} </h2>;
   if (!isLoading) {
@@ -27,13 +39,19 @@ const MovieDetailsPage = () => {
     const movieGenres = genres.map(genre => genre.name).join(', ');
     return (
       <>
+        <button className={styles.button} onClick={handleGoBack}>
+          &#8592; Go back
+        </button>
+
         <div className={styles.wrapper}>
-          <img
-            className={styles.image}
-            width="200px"
-            src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
-            alt={movieTitle}
-          />
+          {poster_path && (
+            <img
+              className={styles.image}
+              width="200px"
+              src={`https://image.tmdb.org/t/p/w500/${poster_path}`}
+              alt={movieTitle}
+            />
+          )}
           <div>
             <h2>
               {movieTitle} ({releaseDate})
@@ -50,12 +68,10 @@ const MovieDetailsPage = () => {
           <h4>Additional information</h4>
           <ul>
             <li>
-              {' '}
-              <Link to={`/movies/${id}/cast`}>Cast</Link>{' '}
+              <Link to={`/movies/${id}/cast`}>Cast</Link>
             </li>
             <li>
-              {' '}
-              <Link to={`/movies/${id}/reviews`}>Reviews</Link>{' '}
+              <Link to={`/movies/${id}/reviews`}>Reviews</Link>
             </li>
           </ul>
         </div>
@@ -65,4 +81,4 @@ const MovieDetailsPage = () => {
   }
 };
 
-export { MovieDetailsPage };
+export default MovieDetailsPage;
